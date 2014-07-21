@@ -50,8 +50,8 @@ def forum(request, forum_slug, topic_type='', topic_type2='',
     return render(request, template_name, ext_ctx)
 
 
-def topic(request, topic_id, template_name="lbforum/topic.html"):
-    topic = get_object_or_404(Topic, id=topic_id)
+def topic(request, topic_slug, template_name="lbforum/topic.html"):
+    topic = get_object_or_404(Topic, slug=topic_slug)
     topic.num_views += 1
     topic.save()
     posts = topic.posts
@@ -203,7 +203,8 @@ def delete_post(request, post_id):
     topic.update_state_info()
     topic.forum.update_state_info()
     #return HttpResponseRedirect(request.path)
-    return HttpResponseRedirect(reverse("lbforum_topic", args=[topic.id]))
+    return HttpResponseRedirect(reverse("lbforum_topic", args=[topic.slug]))
+    # return HttpResponseRedirect(reverse("lbforum_topic", args=[topic.id]))
 
 
 @login_required
@@ -224,7 +225,8 @@ def update_topic_attr_as_not(request, topic_id, attr):
         return HttpResponseRedirect(reverse("lbforum_forum",
                                             args=[topic.forum.slug]))
     else:
-        return HttpResponseRedirect(reverse("lbforum_topic", args=[topic.id]))
+        return HttpResponseRedirect(reverse("lbforum_topic", args=[topic.slug]))
+        # return HttpResponseRedirect(reverse("lbforum_topic", args=[topic.id]))
 
 #Feed...
 #Add Post

@@ -13,6 +13,8 @@ from django.conf import settings
 from attachments.models import Attachment
 from onlineuser.models import Online
 
+from django_extensions.db.fields import AutoSlugField
+
 
 class Config(models.Model):
     key = models.CharField(max_length=255)  # PK
@@ -121,6 +123,7 @@ class Topic(models.Model):
     updated_on = models.DateTimeField(blank=True, null=True)
     last_reply_on = models.DateTimeField(auto_now_add=True)
     last_post = models.CharField(max_length=255, blank=True)  # pickle obj
+    slug = AutoSlugField(_('slug'), max_length=255, unique=True, populate_from=('subject',))
 
     has_imgs = models.BooleanField(default=False)
     has_attachments = models.BooleanField(default=False)
@@ -149,7 +152,8 @@ class Topic(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('lbforum_topic', (), {'topic_id': self.id})
+        # return ('lbforum_topic', (), {'topic_id': self.id})
+        return ('lbforum_topic', (), {'topic_slug': self.slug})
 
     def get_last_post(self):
         if not self.last_post:

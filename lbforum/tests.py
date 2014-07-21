@@ -28,7 +28,7 @@ class ViewsSimpleTest(ViewsBaseCase):
         self.assertEqual(resp.status_code, 200)
 
     def test_topic(self):
-        resp = self.client.get(reverse('lbforum_topic', args=(1, )))
+        resp = self.client.get(reverse('lbforum_topic', args=('re-where-to-buy-computer-in-english', )))
         self.assertEqual(resp.status_code, 200)
 
     def test_lang_js(self):

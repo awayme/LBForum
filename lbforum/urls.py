@@ -15,7 +15,8 @@ forum_patterns = patterns(
 
 topic_patterns = patterns(
     '',
-    url('^(?P<topic_id>\d+)/$', views.topic, name='lbforum_topic'),
+    url('^(?P<topic_slug>[\w-]+)/$', views.topic, name='lbforum_topic'),
+    # url('^(?P<topic_id>\d+)/$', views.topic, name='lbforum_topic'),
     url('^(?P<topic_id>\d+)/delete/$', views.delete_topic,
         name='lbforum_delete_topic'),
     url('^(?P<topic_id>\d+)/update_topic_attr_as_not/(?P<attr>[\w-]+)/$',
